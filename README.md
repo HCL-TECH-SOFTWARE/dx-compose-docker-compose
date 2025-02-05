@@ -9,7 +9,7 @@ For installation instructions see: <https://docs.docker.com/compose/install/>
 
 ## Setup your environment
 
-Start by cloning this repository locally and cd into the `dx-liberty-docker-compose` directory.
+Start by cloning this repository locally and cd into the `dx-compose-docker-compose` directory.
 
 All you need to do is to load the HCL DX docker images into your local docker repository and set up your local environment with some environment variables.
 
@@ -23,14 +23,14 @@ Please make sure to update the image names in the `dx.properties` file appropria
 Linux/MAC:
 
 ```bash
-cd ./dx-liberty-docker-compose
+cd ./dx-compose-docker-compose
 bash load.sh <docker-image-archives-directory>
 ```
 
 Windows:
 
 ```bash
-cd ./dx-liberty-docker-compose
+cd ./dx-compose-docker-compose
 load.bat <docker-image-archives-directory>
 ```
 
@@ -41,14 +41,14 @@ If the docker compose is not running on local, then DX_HOSTNAME value in set.sh/
 Linux/MAC:
 
 ```bash
-cd ./dx-liberty-docker-compose
+cd ./dx-compose-docker-compose
 source ./set.sh
 ```
 
 Windows:
 
 ```bash
-cd ./dx-liberty-docker-compose
+cd ./dx-compose-docker-compose
 set.bat
 ```
 
@@ -59,14 +59,14 @@ If you want to unset your DX docker-compose environment, you can do so by runnin
 Linux/MAC:
 
 ```bash
-cd ./dx-liberty-docker-compose
+cd ./dx-compose-docker-compose
 source ./unset.sh
 ```
 
 Windows:
 
 ```bash
-cd ./dx-liberty-docker-compose
+cd ./dx-compose-docker-compose
 unset.bat
 ```
 
@@ -88,7 +88,7 @@ docker-compose up
 This will start all services defined in `dx.yaml` and logs will be printed directly go to your bash.
 You can stop docker-compose in this situation by pressing `CTRL+C`.
 
-If your user does not have permission to write to the persistent volumes location (folder `dx-liberty-docker-compose/volumes`) specified in the docker-compose file dx.yaml, you will see errors and the system will not start properly. If necessary, change the permissions of this folder so that the user running the docker process can read from and write to it.
+If your user does not have permission to write to the persistent volumes location (folder `dx-compose-docker-compose/volumes`) specified in the docker-compose file dx.yaml, you will see errors and the system will not start properly. If necessary, change the permissions of this folder so that the user running the docker process can read from and write to it.
 
 Here are some useful command line arguments to run `docker-compose up`:
 
@@ -304,14 +304,14 @@ To install CC and DAM and SearchV2 and PeopleService applications in DX WebEngin
 Linux/MAC:
 
 ```bash
-cd ./dx-liberty-docker-compose
+cd ./dx-compose-docker-compose
 source ./installApps.sh -enableDAM true -enableCC false -enableSearchV2 true -enablePeopleService true
 ```
 
 Windows:
 
 ```bash
-cd ./dx-liberty-docker-compose
+cd ./dx-compose-docker-compose
 installApps.bat -enableDAM true -enableCC false -enableSearchV2 true -enablePeopleService true
 ```
 > **_NOTE:_** For any change in DAM need to restart the core, otherwise DAM Picker will not work as expected
@@ -330,7 +330,7 @@ To install Search applications in DX WebEngine and to enable ,
 - -Dsearch.wcm.version: search version for WCM, eg: 2
 
 ```bash
-cd ./dx-liberty-docker-compose
+cd ./dx-compose-docker-compose
 source /opt/openliberty/wlp/usr/svrcfg/bin/manageSearchV2.sh -DENABLE=true -Dsearch.middleware.ui.uri=http://dx-search-middleware:3000/dx/ui/search -Dsearch.input.redirect.version=2 -Dsearch.wcm.version=2
 ```
 
