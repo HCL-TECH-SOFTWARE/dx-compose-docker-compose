@@ -137,16 +137,19 @@ Example output:
 
 ```bash
 
-NAME                 CPU %     MEM USAGE / LIMIT     MEM %     NET I/O           BLOCK I/O         PIDS
-dx-haproxy           0.00%     7.008MiB / 31.21GiB   0.02%     11.1MB / 10.8MB   0B / 0B           9
-dx-dam               0.27%     493.4MiB / 31.21GiB   1.54%     263MB / 381MB     8.19kB / 19.5kB   78
-dx-dam-db-pool       0.05%     116.8MiB / 31.21GiB   0.37%     586MB / 659MB     0B / 1.44MB       36
-dx-ringapi           0.17%     104.2MiB / 31.21GiB   0.33%     1.45MB / 1.2MB    0B / 24.1kB       23
-dx-dam-db-node-0     0.07%     63.26MiB / 31.21GiB   0.20%     414MB / 233MB     0B / 15.6MB       14
-dx-core              0.80%     2.137GiB / 31.21GiB   6.85%     1.62MB / 6.71MB   436MB / 563MB     375
-dx-cc                0.19%     71.73MiB / 31.21GiB   0.22%     7.7kB / 0B        0B / 11.3kB       23
-dx-image-processor   0.17%     426.3MiB / 31.21GiB   1.33%     17.5MB / 4.27MB   0B / 23kB         23
+NAME                    CPU %     MEM USAGE / LIMIT     MEM %     NET I/O           BLOCK I/O         PIDS
+dx-haproxy              0.00%     7.008MiB / 31.21GiB   0.02%     11.1MB / 10.8MB   0B / 0B           9
+dx-dam                  0.27%     493.4MiB / 31.21GiB   1.54%     263MB / 381MB     8.19kB / 19.5kB   78
+dx-dam-db-pool          0.05%     116.8MiB / 31.21GiB   0.37%     586MB / 659MB     0B / 1.44MB       36
+dx-ringapi              0.17%     104.2MiB / 31.21GiB   0.33%     1.45MB / 1.2MB    0B / 24.1kB       23
+dx-dam-db-node-0        0.07%     63.26MiB / 31.21GiB   0.20%     414MB / 233MB     0B / 15.6MB       14
+dx-core                 0.80%     2.137GiB / 31.21GiB   6.85%     1.62MB / 6.71MB   436MB / 563MB     375
+dx-cc                   0.19%     71.73MiB / 31.21GiB   0.22%     7.7kB / 0B        0B / 11.3kB       58
+dx-image-processor      0.17%     426.3MiB / 31.21GiB   1.33%     17.5MB / 4.27MB   0B / 23kB         23
 dx-peopleservice        0.00%     139.8MiB / 11.67GiB   1.17%     416kB / 86.2kB    70.9MB / 12.1MB   24
+dx-fileprocessor        0.43%     236.2MiB / 31.21GiB   0.01%     18.6kB / 17.5kB   73.7MB / 143kB    67
+dx-search-middleware    0.59%     120.8MiB / 31.21GiB   0.01%     644kB / 356kB     70MB / 8.19kB     43
+dx-opensearch-manager   0.69%     1.531GiB / 31.21GiB   0.04%     294kB / 272kB     179MB / 16.6MB    169
 
 ```
 
@@ -168,8 +171,10 @@ hcl/dx/persistence-node:v1.3_20211213-1454                 "/start_postgres.sh" 
 hcl/dx/core:v95_CF200_20211213-1442                        "sh -c /opt/app/entr…"   3 days ago   Up 3 days             0.0.0.0:7777->7777/tcp, :::7777->7777/tcp, 0.0.0.0:10020->10020/tcp, :::10020->10020/tcp, 10032/tcp, 0.0.0.0:10033->10033/tcp, :::10033->10033/tcp, 10034-10038/tcp, 0.0.0.0:10039->10039/tcp, :::10039->10039/tcp, 10040/tcp, 0.0.0.0:10041->10041/tcp, :::10041->10041/tcp, 10042/tcp, 0.0.0.0:10200->10200/tcp, :::10200->10200/tcp, 0.0.0.0:10202-10203->10202-10203/tcp, :::10202-10203->10202-10203/tcp, 10201/tcp   dx-core
 hcl/dx/content-composer:v1.13.0_20211213-1443              "/opt/app/start_all_…"   3 days ago   Up 3 days             0.0.0.0:5000->3000/tcp, :::5000->3000/tcp                                                                                                                                                                                                                                                                                                                                                                                  dx-cc
 hcl/dx/image-processor:v1.13.0_20211213-1446               "/home/dx_user/start…"   3 days ago   Up 3 days             0.0.0.0:3500->8080/tcp, :::3500->8080/tcp                                                                                                                                                                                                                                                                                                                                                                                  dx-image-processor
-hcl/dx/people-service:v1.0.0_20241210-2231_rivendell_master_889e0ef   "/home/dx_user/entry…"   22 minutes ago   Up 13 minutes             0.0.0.0:7001->3000/tcp                                                          dx-peopleservice
-
+hcl/dx/people-service:v1.0.0_20241210-2231                 "/home/dx_user/entry…"   3 days ago   Up 3 days             0.0.0.0:7001->3000/tcp                                                                                                                                                                                           dx-peopleservice
+hcl/dx/file-processor:v95_CF224_20241106-0729              "/bin/bash entrypoin…"   3 days ago   Up 3 days   0.0.0.0:9998->9998/tcp                                                                                                                                                                                           dx-fileprocessor
+hcl/dx/search-middleware:v2.0.0_20250102-1045              "/bin/bash entrypoin…"   3 days ago   Up 3 days   0.0.0.0:3000->3000/tcp                                                                                                                                                                                           dx-search-middleware
+hcl/dx/opensearch:v2.0.0_20250104-1911                     "/bin/bash entrypoin…"   3 days ago   Up 3 days             9300/tcp, 9600/tcp, 0.0.0.0:9200->9200/tcp, 9650/tcp                                                                                                                                                                                           dx-opensearch-manager
 ```
 
 ## Tips and tricks
