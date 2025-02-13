@@ -356,10 +356,10 @@ http://localhost/wps/portal/Practitioner/SearchCenter
 
 ### Using Search API and UI in DX WebEngine
 
-### Create JWT token
+#### Create JWT token
 Open the `search-middleware` API (http://localhost/dx/api/search/v2/explorer). Do an authentication via the `/admin/authenticate` endpoint with the `searchadmin` user. The JWT token is now needed for the authorization. Do authorization with `Bearer JWT_TOKEN`.
 
-### Create a content source
+#### Create a content source
 To create a `WCM` content source use the POST `contentsources` endpoint with the following example payload.
 ```
 {
@@ -375,7 +375,7 @@ The `aclLookupPath` is using following this pattern - `<CONTEXT-ROOT>/mycontenth
 The response `id` would then be needed to create its specific WCM crawler. The `dx-core` container will be used as WCM data source.
 
 
-### Create a crawler
+#### Create a crawler
 To create a crawler for the `WCM` content source use the POST `crawlers` endpoint. Please replace the `<CONTENT-SOURCE-ID>` with the correct `id`. The following payload can be use the create the `WCM` crawler. 
 
 ```
