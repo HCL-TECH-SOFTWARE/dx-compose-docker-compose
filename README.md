@@ -357,10 +357,10 @@ http://localhost/wps/portal/Practitioner/SearchCenter
 ### Using Search API and UI in DX WebEngine
 
 #### Create JWT token
-Open the `search-middleware` API (http://localhost/dx/api/search/v2/explorer). Do an authentication via the `/admin/authenticate` endpoint with the `searchadmin` user. The JWT token is now needed for the authorization. Do authorization with `Bearer JWT_TOKEN`.
+Open the `search-middleware` API explorer (http://localhost/dx/api/search/v2/explorer). Do an authentication via the `/admin/authenticate` endpoint with the `searchadmin` user. The JWT token is now needed for the authorization. Do authorization with `Bearer JWT_TOKEN`.
 
 #### Create a content source
-To create a `WCM` content source use the POST `contentsources` endpoint with the following example payload.
+To create a `WCM` content source, use the POST `contentsources` endpoint with the following example payload.
 ```
 {
   "name": "MyWCM",
@@ -370,13 +370,13 @@ To create a `WCM` content source use the POST `contentsources` endpoint with the
 }
 ```
 
-The `aclLookupPath` is using following this pattern - `<CONTEXT-ROOT>/mycontenthandler/<VP-CONTEXT>`.
+The `aclLookupPath` is using this pattern - `<CONTEXT-ROOT>/mycontenthandler/<VP-CONTEXT>`.
 
 The response `id` would then be needed to create its specific WCM crawler. The `dx-core` container will be used as WCM data source.
 
 
 #### Create a crawler
-To create a crawler for the `WCM` content source use the POST `crawlers` endpoint. Please replace the `<CONTENT-SOURCE-ID>` with the correct `id`. The following payload can be use the create the `WCM` crawler. 
+To create a crawler for the `WCM` content source, use the POST `crawlers` endpoint. Please replace the `<CONTENT-SOURCE-ID>` with the correct `id`. The following payload can be used to create the `WCM` crawler. 
 
 ```
 {
@@ -397,7 +397,7 @@ To create a crawler for the `WCM` content source use the POST `crawlers` endpoin
 ```
 http://dx-core/wps/seedlist/server?SeedlistId=&Source=com.ibm.workplace.wcm.plugins.seedlist.retriever.WCMRetrieverFactory&Action=GetDocuments
 
-The crawler needs now a bit of time to collect all the WCM data. It's also depending on the `schedule` parameter (for example, in the sample payload above, schedule is every 5 minutes). Check the middleware logs to get info if the crawler is done. You can also use the GET `crawlers` endpoint to check on the crawler status.
+The crawler needs a bit of time to collect all the WCM data. It also depends on the `schedule` parameter (for example, in the sample payload above, schedule is every 5 minutes). Check the middleware logs to get info if the crawler is done. You can also use the GET `crawlers` endpoint to check on the crawler status.
 
 When the crawler status is finished, you can now use the Search UI to query.
 
