@@ -319,11 +319,14 @@ Windows:
 cd ./dx-compose-docker-compose
 installApps.bat -enableDAM true -enableCC false -enableSearchV2 true -enablePeopleService true
 ```
-> **_NOTE:_** For any change in DAM need to restart the core, otherwise DAM Picker will not work as expected
+
+> **_NOTE:_** For any change in Search, you need to restart the core to ensure Search page, theme, and portlet have no caching issues.
+
+> **_NOTE:_** For any change in DAM, you need to restart the core, otherwise DAM Picker will not work as expected
 
 > **_NOTE:_** For any change in DX_HOSTNAME it's a must to restart dx-core and re-execute installApps.sh / installApps.bat
 
-### Integrating Search API in DX WebEngine
+### Integrating Search API and UI in DX WebEngine
 
 To install Search applications in DX WebEngine and to enable ,
 
@@ -350,6 +353,58 @@ Check that the searchCenter UI is up and running
 ```bash
 http://localhost/wps/portal/Practitioner/SearchCenter
 ```
+
+### Using Search API and UI in DX WebEngine
+
+### Create JWT token
+Open the `search-middleware` API (http://localhost/dx/api/search/v2/explorer). Do an authentication via the `/admin/authenticate` endpoint with the `searchadmin` user. The JWT token is now needed for the authorization. Do authorization with `Bearer JWT_TOKEN`.
+
+### Create a content source
+To create a `WCM` content source use the POST `contentsources` endpoint with the following example payload.
+```
+{
+  "name": "MyWCM",
+  "type": "wcm",
+  "aclLookupHost": "http://dx-core:9080",
+  "aclLookupPath": "/wps/mycontenthandler"
+}
+```
+
+The `aclLookupPath` is using following this pattern - `<CONTEXT-ROOT>/mycontenthandler/<VP-CONTEXT>`.
+
+The response `id` would then be needed to create its specific WCM crawler. The `dx-core` container will be used as WCM data source.
+
+
+### Create a crawler
+To create a crawler for the `WCM` content source use the POST `crawlers` endpoint. Please replace the `<CONTENT-SOURCE-ID>` with the correct `id`. The following payload can be use the create the `WCM` crawler. 
+
+```
+{
+  "contentSource": "<CONTENT-SOURCE-ID>",
+  "type": "wcm",
+  "configuration": {
+    "targetDataSource": "http://dx-core:9080/wps/seedlist/server?SeedlistId=&Source=com.ibm.workplace.wcm.plugins.seedlist.retriever.WCMRetrieverFactory&Action=GetDocuments",
+    "schedule": "*/5 * * * *",
+    "security": {
+      "type": "basic",
+      "username": "wpsadmin",
+      "password": "wpsadmin"
+    },
+    "maxCrawlTime": 0,
+    "maxRequestTime": 0
+  }
+}
+```
+http://dx-core/wps/seedlist/server?SeedlistId=&Source=com.ibm.workplace.wcm.plugins.seedlist.retriever.WCMRetrieverFactory&Action=GetDocuments
+
+The crawler needs now a bit of time to collect all the WCM data. It's also depending on the `schedule` parameter (for example, in the sample payload above, schedule is every 5 minutes). Check the middleware logs to get info if the crawler is done. You can also use the GET `crawlers` endpoint to check on the crawler status.
+
+When the crawler status is finished, you can now use the Search UI to query.
+
+```bash
+http://localhost/wps/portal/Practitioner/SearchCenter
+```
+
 
 ### Connecting to your DX and applications.
 
