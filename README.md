@@ -162,6 +162,7 @@ docker-compose ps
 Example output:
 
 ```bash
+  
 IMAGE                                                      COMMAND                  CREATED      STATUS                PORTS                                                                                                                                                                                                                                                                                                                                                                                                                      NAMES
 hcl/dx/haproxy:v1.0.0_20220713-0158                        "/bin/bash entrypoin…"   3 days ago   Up 3 days             0.0.0.0:80->80/tcp, :::80->80/tcp, 0.0.0.0:443->443/tcp, :::443->443/tcp                                                                                                                                                                                                                                                                                                                                                   dx-haproxy
 hcl/dx/digital-asset-manager:v1.12.0_20211213-1448         "/bin/bash entrypoin…"   3 days ago   Up 3 days             0.0.0.0:80->8081/tcp, :::80->8081/tcp                                                                                                                                                                                                                                                                                                                                                                                      dx-dam
@@ -174,8 +175,10 @@ hcl/dx/image-processor:v1.13.0_20211213-1446               "/home/dx_user/start�
 hcl/dx/people-service:v1.0.0_20241210-2231                 "/home/dx_user/entry…"   3 days ago   Up 3 days             0.0.0.0:7001->3000/tcp                                                                                                                                                                                           dx-peopleservice
 hcl/dx/file-processor:v95_CF224_20241106-0729              "/bin/bash entrypoin…"   3 days ago   Up 3 days            0.0.0.0:9998->9998/tcp                                                                                                                                                                                           dx-fileprocessor
 hcl/dx/search-middleware:v2.0.0_20250102-1045              "/bin/bash entrypoin…"   3 days ago   Up 3 days            0.0.0.0:3000->3000/tcp                                                                                                                                                                                           dx-search-middleware
-hcl/dx/opensearch:v2.0.0_20250104-1911                     "/bin/bash entrypoin…"   3 days ago   Up 3 days             9300/tcp, 9600/tcp, 0.0.0.0:9200->9200/tcp, 9650/tcp                                                                                                                                                                                           dx-opensearch-manager
-```
+hcl/dx/opensearch:v2.0.0_20250104-1911                     "/bin/bash entrypoin…"   3 days ago   Up 3 days             9300/tcp, 9600/tcp, 0.0.0.0:9200->9200/tcp, 9650/tcp   
+dx-opensearch-manager
+
+ ```
 
 ## Tips and tricks
 
@@ -319,11 +322,14 @@ Windows:
 cd ./dx-compose-docker-compose
 installApps.bat -enableDAM true -enableCC false -enableSearchV2 true -enablePeopleService true
 ```
-> **_NOTE:_** For any change in DAM need to restart the core, otherwise DAM Picker will not work as expected
+
+> **_NOTE:_** For any change in Search, you need to restart the core to ensure Search page, theme, and portlet have no caching issues.
+
+> **_NOTE:_** For any change in DAM, you need to restart the core, otherwise DAM Picker will not work as expected
 
 > **_NOTE:_** For any change in DX_HOSTNAME it's a must to restart dx-core and re-execute installApps.sh / installApps.bat
 
-### Integrating Search API in DX WebEngine
+### Integrating Search API and UI in DX WebEngine
 
 To install Search applications in DX WebEngine and to enable ,
 
@@ -350,6 +356,58 @@ Check that the searchCenter UI is up and running
 ```bash
 http://localhost/wps/portal/Practitioner/SearchCenter
 ```
+
+### Using Search API and UI in DX WebEngine
+
+#### Create JWT token
+Open the `search-middleware` API explorer (http://localhost/dx/api/search/v2/explorer). Do an authentication via the `/admin/authenticate` endpoint with the `searchadmin` user. The JWT token is now needed for the authorization. Do authorization with `Bearer JWT_TOKEN`.
+
+#### Create a content source
+To create a `WCM` content source, use the POST `contentsources` endpoint with the following example payload.
+```
+{
+  "name": "MyWCM",
+  "type": "wcm",
+  "aclLookupHost": "http://dx-core:9080",
+  "aclLookupPath": "/wps/mycontenthandler"
+}
+```
+
+The `aclLookupPath` is using this pattern - `<CONTEXT-ROOT>/mycontenthandler/<VP-CONTEXT>`.
+
+The response `id` would then be needed to create its specific WCM crawler. The `dx-core` container will be used as WCM data source.
+
+
+#### Create a crawler
+To create a crawler for the `WCM` content source, use the POST `crawlers` endpoint. Please replace the `<CONTENT-SOURCE-ID>` with the correct `id`. The following payload can be used to create the `WCM` crawler. 
+
+```
+{
+  "contentSource": "<CONTENT-SOURCE-ID>",
+  "type": "wcm",
+  "configuration": {
+    "targetDataSource": "http://dx-core:9080/wps/seedlist/server?SeedlistId=&Source=com.ibm.workplace.wcm.plugins.seedlist.retriever.WCMRetrieverFactory&Action=GetDocuments",
+    "schedule": "*/5 * * * *",
+    "security": {
+      "type": "basic",
+      "username": "wpsadmin",
+      "password": "wpsadmin"
+    },
+    "maxCrawlTime": 0,
+    "maxRequestTime": 0
+  }
+}
+```
+http://dx-core/wps/seedlist/server?SeedlistId=&Source=com.ibm.workplace.wcm.plugins.seedlist.retriever.WCMRetrieverFactory&Action=GetDocuments
+
+The crawler needs a bit of time to collect all the WCM data. It also depends on the `schedule` parameter (for example, in the sample payload above, schedule is every 5 minutes). Check the middleware logs to get info if the crawler is done. You can also use the GET `crawlers` endpoint to check on the crawler status.
+
+When the crawler status is finished, you can now use the Search UI to query.
+
+```bash
+http://localhost/wps/portal/Practitioner/SearchCenter
+```
+
 
 ### Connecting to your DX and applications.
 
