@@ -176,7 +176,6 @@ hcl/dx/people-service:v1.0.0_20241210-2231                 "/home/dx_user/entry�
 hcl/dx/file-processor:v95_CF224_20241106-0729              "/bin/bash entrypoin…"   3 days ago   Up 3 days            0.0.0.0:9998->9998/tcp                                                                                                                                                                                           dx-fileprocessor
 hcl/dx/search-middleware:v2.0.0_20250102-1045              "/bin/bash entrypoin…"   3 days ago   Up 3 days            0.0.0.0:3000->3000/tcp                                                                                                                                                                                           dx-search-middleware
 hcl/dx/opensearch:v2.0.0_20250104-1911                     "/bin/bash entrypoin…"   3 days ago   Up 3 days             9300/tcp, 9600/tcp, 0.0.0.0:9200->9200/tcp, 9650/tcp   
-dx-opensearch-manager
 
  ```
 
