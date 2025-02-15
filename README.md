@@ -1,6 +1,6 @@
 # HCL DX Compose docker-compose
 
-This little scripting enables you to run a fully fledged DX environment with minimal footprint on your local machine.
+This little scripting enables you to run a fully fledged DX Compose environment with minimal footprint on your local machine.
 It uses docker-compose to start/stop and manage Docker containers.
 Docker-compose an addon on top of Docker.
 On Mac OS Docker desktop docker-compose is available out of the box.
@@ -13,11 +13,11 @@ Start by cloning this repository locally and cd into the `dx-compose-docker-comp
 
 All you need to do is to load the HCL DX docker images into your local docker repository and set up your local environment with some environment variables.
 
-### Loading DX docker images
+### Loading DX Compose docker images
 
 The load.sh script expects a path to a directory containing the docker image archives as a command line argument <docker-image-archives-directory>.
 
-> **_NOTE:_** If you already loaded the DX docker images into a docker repository of your choice, you may skip executing `load.sh` or `load.bat`.
+> **_NOTE:_** If you already loaded the DX Compose docker images into a docker repository of your choice, you may skip executing `load.sh` or `load.bat`.
 Please make sure to update the image names in the `dx.properties` file appropriately.
 
 Linux/MAC:
@@ -48,7 +48,7 @@ source ./set.sh
 Windows:
 
 ```bash
-cd ./dx-compose-docker-compose
+cd ./-compose-docker-compose
 set.bat
 ```
 
@@ -79,7 +79,7 @@ source ./createCerts.sh
 
 ## Starting the environment
 
-After setting your environment, you can start the DX docker-compose environment by running. **Important** is that you need to be using a minimum version `1.27.4` for `docker-compose`.
+After setting your environment, you can start the DX Compose docker-compose environment by running. **Important** is that you need to be using a minimum version `1.27.4` for `docker-compose`.
 
 ```bash
 docker-compose up
@@ -117,7 +117,7 @@ docker-compose down
 
 ### Logs
 
-If you want to look at logs for all of the DX services, you can easily do so by running
+If you want to look at logs for all of the DX Compose services, you can easily do so by running
 
 ```bash
 docker-compose logs
@@ -184,7 +184,7 @@ hcl/dx/opensearch:v2.0.0_20250104-1911                     "/bin/bash entrypoinâ
 ### Docker-compose services and load balancing
 
 The core of a docker-compose environment are its services.
-In the case of DX, each of the different DX components (Core, CC, DAM, ...) is a individual docker-compose service.
+In the case of DX Compose, each of the different DX Compose components (Core, CC, DAM, ...) is a individual docker-compose service.
 The services are all described and configured in `dx.yaml`.
 Amongst other configurations, each service has a external port defined.
 
@@ -211,7 +211,7 @@ In addition to the above, if `db-node-0` or `db-pool` or `dam` is down, verify a
 3. Start `dam` if the `db-pool` is up using `docker-compose start dam`. Verify the logs to see if DAM is running.
 
 
-### Running DX docker-compose in a hybrid setup
+### Running DX Compose docker-compose in a hybrid setup
 
 In the case that you already have a fully configured DX WebEngine (e.g. an on premise installation) up and running, you can choose to configure docker-compose to connect to the on premise environment.
 The below mentioned changes in `dx.yaml` need to be applied to make this work.
@@ -408,7 +408,7 @@ http://localhost/wps/portal/Practitioner/SearchCenter
 ```
 
 
-### Connecting to your DX and applications.
+### Connecting to your DX Compose and applications.
 
 To access your dx environment, navigate to _http://<PORTAL_HOST>/wps/portal_
 
@@ -436,7 +436,7 @@ To connect into a specific container of a service (if there is multiple containe
 docker exec -it dx_dam bash
 ```
 
-### Running Prerequisite Checks to your DX and applications.
+### Running Prerequisite Checks to your DX Compose and applications.
 
 To perform checks to the mounted volumes, you can directly connect using the dx-prereqs-checker container
 
