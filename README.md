@@ -11,7 +11,7 @@ For installation instructions see: <https://docs.docker.com/compose/install/>
 
 Start by cloning this repository locally and cd into the `dx-compose-docker-compose` directory.
 
-All you need to do is to load the HCL DX docker images into your local docker repository and set up your local environment with some environment variables.
+All you need to do is to load the HCL DX Compose docker images into your local docker repository and set up your local environment with some environment variables.
 
 ### Loading DX Compose docker images
 
@@ -54,7 +54,7 @@ set.bat
 
 > **_NOTE:_** The second command is **source ./set.sh** and not just executing set.sh directly.
 
-If you want to unset your DX docker-compose environment, you can do so by running `unset.sh`:
+If you want to unset your DX Compose docker-compose environment, you can do so by running `unset.sh`:
 
 Linux/MAC:
 
@@ -70,7 +70,7 @@ cd ./dx-compose-docker-compose
 unset.bat
 ```
 
-> **_NOTE:_** By applying the above change, any change you apply in DX WebEngine will not be persisted. All your changes will be lost as soon as the container is stopped.
+> **_NOTE:_** By applying the above change, any change you apply in DX Compose WebEngine will not be persisted. All your changes will be lost as soon as the container is stopped.
 
 ## Create the correct certificates
 ```
@@ -211,10 +211,10 @@ In addition to the above, if `db-node-0` or `db-pool` or `dam` is down, verify a
 
 ### Running DX Compose docker-compose in a hybrid setup
 
-In the case that you already have a fully configured DX WebEngine (e.g. an on premise installation) up and running, you can choose to configure docker-compose to connect to the on premise environment.
+In the case that you already have a fully configured DX Compose WebEngine (e.g. an on premise installation) up and running, you can choose to configure docker-compose to connect to the on premise environment.
 The below mentioned changes in `dx.yaml` need to be applied to make this work.
 
-> **_NOTE:_** You will also have to configure your DX WebEngine environment to connect to the services running docker-compose (e.g. configuration of DAM and Content Composer portlets). Please have a look in the official HCL DX Help Center to understand which changes need to be done, if necessary.
+> **_NOTE:_** You will also have to configure your DX Compose WebEngine environment to connect to the services running docker-compose (e.g. configuration of DAM and Content Composer portlets). Please have a look in the official HCL DX Compose Help Center to understand which changes need to be done, if necessary.
 
 Update the Ring API service configuration as described:
 
@@ -291,19 +291,19 @@ docker-compose logs dam
 
 For more information see <https://docs.docker.com/compose/reference/logs/>
 
-### Installing Applications CC and DAM and SearchV2 and PeopleService in DX WebEngine
+### Installing Applications CC and DAM and SearchV2 and PeopleService in DX Compose WebEngine
 #### Prerequisites
 ```bash
 sudo mkdir /var/log/liberty
 sudo chown -R  $USER:$USER  /var/log/liberty
 ```
 
-To install CC and DAM and SearchV2 and PeopleService applications in DX WebEngine and to enable , 
+To install CC and DAM and SearchV2 and PeopleService applications in DX Compose WebEngine and to enable , 
 ##### Arguments
-- -enableDAM: if set true/false need to enable/disable DAM in the DX WebEngine respectively.
-- -enableCC: if set true/false need to enable/disable CC in the DX WebEngine respectively.
-- -enableSearchV2: if set true/false need to enable/disable SearchV2 in the DX WebEngine respectively.
-- -enablePeopleService: if set true/false need to enable/disable PeopleService in the DX WebEngine respectively.
+- -enableDAM: if set true/false need to enable/disable DAM in the DX Compose WebEngine respectively.
+- -enableCC: if set true/false need to enable/disable CC in the DX Compose WebEngine respectively.
+- -enableSearchV2: if set true/false need to enable/disable SearchV2 in the DX Compose WebEngine respectively.
+- -enablePeopleService: if set true/false need to enable/disable PeopleService in the DX Compose WebEngine respectively.
 
 
 Linux/MAC:
@@ -408,17 +408,13 @@ http://localhost/wps/portal/Practitioner/SearchCenter
 
 ### Connecting to your DX Compose and applications.
 
-To access your dx environment, navigate to _http://<PORTAL_HOST>/wps/portal_
+To access your DX Compose environment, navigate to _http://<PORTAL_HOST>/wps/portal_
 
 Example: http://example.com/wps/portal
 
-To access dx admin console, navigate to _https://<PORTAL_HOST>:10041/ibm/console_
+To access DX Compose admin console, navigate to _https://<PORTAL_HOST>:9443/adminCenter/login.jsp
 
-Example: https://example.com:10041/ibm/console
-
-To access the ConfigWizard Server Admin console _https://<PORTAL_HOST>:10203/ibm/console_
-
-Example: https://example.com:10203/ibm/console
+Example: https://example.com:9443/adminCenter/login.jsp
 
 ### Connecting into a docker-compose service via bash
 

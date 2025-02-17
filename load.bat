@@ -15,7 +15,7 @@
 :: limitations under the License.
 
 
-:: This script will load all DX docker images that are accessible 
+:: This script will load all DX Compose docker images that are accessible 
 :: through docker-compose into the local docker registry.
 :: In addition to that, the dx.properties file will be updated
 :: with the tags of the docker images that were loaded by the script.

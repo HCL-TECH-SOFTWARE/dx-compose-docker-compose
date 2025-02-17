@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# This script installs CC and DAM portlets into DX WebEngine running in a docker-compose environment
+# This script installs CC and DAM portlets into DX Compose WebEngine running in a docker-compose environment
 
 # Initialize default values
 ENABLE_DAM=false
