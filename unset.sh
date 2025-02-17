@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright 2024 HCL Technologies
+# Copyright 2025 HCL Technologies
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ unset COMPOSE_FILE
 
 unset DX_HOSTNAME
 
-unset DX_DOCKER_IMAGE_CORE
+unset DX_DOCKER_IMAGE_WEBENGINE
 unset DX_DOCKER_IMAGE_RINGAPI
 unset DX_DOCKER_IMAGE_DAM
 unset DX_DOCKER_IMAGE_IMAGE_PROCESSOR

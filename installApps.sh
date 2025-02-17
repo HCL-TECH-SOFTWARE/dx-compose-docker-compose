@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright 2024 HCL Technologies
+# Copyright 2025 HCL Technologies
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# This script installs CC and DAM portlets into DX Core running in a docker-compose environment
+# This script installs CC and DAM portlets into DX Compose WebEngine running in a docker-compose environment
 
 # Initialize default values
 ENABLE_DAM=false
@@ -79,16 +79,16 @@ echo "##########################################################################
 echo "Installing CC and DAM and SearchV2 and PeopleService portlets using DX_HOSTNAME=$DX_HOSTNAME"
 echo "#############################################################################"
 echo ""
-docker exec dx-core sh -c "/opt/openliberty/wlp/usr/svrcfg/bin/manageCC.sh  -Dstatic.ui.url=http://$DX_HOSTNAME/dx/ui/content/static -DENABLE=$ENABLE_CC"
+docker exec dx-webengine sh -c "/opt/openliberty/wlp/usr/svrcfg/bin/manageCC.sh  -Dstatic.ui.url=http://$DX_HOSTNAME/dx/ui/content/static -DENABLE=$ENABLE_CC"
 echo "#############################################################################"
 echo ""
-docker exec dx-core sh -c "/opt/openliberty/wlp/usr/svrcfg/bin/manageDAM.sh -Dstatic.ui.url=http://$DX_HOSTNAME/dx/ui/dam/static -DENABLE=$ENABLE_DAM"
+docker exec dx-webengine sh -c "/opt/openliberty/wlp/usr/svrcfg/bin/manageDAM.sh -Dstatic.ui.url=http://$DX_HOSTNAME/dx/ui/dam/static -DENABLE=$ENABLE_DAM"
 echo "############################################################################"
 echo ""
-docker exec dx-core sh -c "/opt/openliberty/wlp/usr/svrcfg/bin/manageSearchV2.sh -Dsearch.input.redirect.version=2 -Dsearch.wcm.version=2 -Dsearch.middleware.ui.uri=http://dx-search-middleware:3000/dx/ui/search -DENABLE=$ENABLE_SEARCHV2"
+docker exec dx-webengine sh -c "/opt/openliberty/wlp/usr/svrcfg/bin/manageSearchV2.sh -Dsearch.input.redirect.version=2 -Dsearch.wcm.version=2 -Dsearch.middleware.ui.uri=http://dx-search-middleware:3000/dx/ui/search -DENABLE=$ENABLE_SEARCHV2"
 echo "############################################################################"
 echo ""
-docker exec dx-core sh -c "/opt/openliberty/wlp/usr/svrcfg/bin/managePeopleService.sh -DPEOPLESERVICE_ENABLED=$ENABLE_PEOPLE_SERVICE -DPEOPLESERVICE_WEBRESOURCES_URI=$PEOPLE_SERVICE_WEBRESOURCES_URI -DPEOPLESERVICE_UI_CONTEXT=$PEOPLE_SERVICE_CONTEXT_ROOT_UI -DPEOPLESERVICE_API_CONTEXT=$PEOPLE_SERVICE_CONTEXT_ROOT_API -DPEOPLESERVICE_PORTLET_CONTEXT=$PEOPLE_SERVICE_CONTEXT_ROOT_PORTLET"
+docker exec dx-webengine sh -c "/opt/openliberty/wlp/usr/svrcfg/bin/managePeopleService.sh -DPEOPLESERVICE_ENABLED=$ENABLE_PEOPLE_SERVICE -DPEOPLESERVICE_WEBRESOURCES_URI=$PEOPLE_SERVICE_WEBRESOURCES_URI -DPEOPLESERVICE_UI_CONTEXT=$PEOPLE_SERVICE_CONTEXT_ROOT_UI -DPEOPLESERVICE_API_CONTEXT=$PEOPLE_SERVICE_CONTEXT_ROOT_API -DPEOPLESERVICE_PORTLET_CONTEXT=$PEOPLE_SERVICE_CONTEXT_ROOT_PORTLET"
 echo "############################################################################"
 echo "Installed CC and DAM and SearchV2 and PeopleService portlets using DX_HOSTNAME=$DX_HOSTNAME"
 echo "############################################################################"
@@ -97,8 +97,8 @@ echo ""
 # echo "Install DXConnect Application and restart config wizard server"
 # echo "###############################################################"
 # Server restart is not required
-# docker exec dx-core sh -c "/opt/openliberty/wlp/bin/server stop defaultServer"
-# docker exec dx-core sh -c "/opt/openliberty/wlp/bin/server start defaultServer"
+# docker exec dx-webengine sh -c "/opt/openliberty/wlp/bin/server stop defaultServer"
+# docker exec dx-webengine sh -c "/opt/openliberty/wlp/bin/server start defaultServer"
 # echo "##################################################################"
 # echo "Installed DXConnect Application and restarted config wizard server"
 # echo "##################################################################"

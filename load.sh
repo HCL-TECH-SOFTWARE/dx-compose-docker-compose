@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright 2024 HCL Technologies
+# Copyright 2025 HCL Technologies
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# This script will load all DX docker images that are accessible 
+# This script will load all DX Compose docker images that are accessible 
 # through docker-compose into the local docker registry.
 # In addition to that, the dx.properties file will be updated
 # with the tags of the docker images that were loaded by the script.
@@ -57,7 +57,7 @@ listOfImages+=("DX_DOCKER_IMAGE_DATABASE_NODE_DIGITAL_ASSET_MANAGER:hcl-dx-persi
 listOfImages+=("DX_DOCKER_IMAGE_DATABASE_CONNECTION_POOL_DIGITAL_ASSET_MANAGER:hcl-dx-persistence-connection-pool")
 listOfImages+=("DX_DOCKER_IMAGE_DIGITAL_ASSET_MANAGER:hcl-dx-digital-asset-manager")
 listOfImages+=("DX_DOCKER_IMAGE_RING_API:hcl-dx-ringapi")
-listOfImages+=("DX_DOCKER_IMAGE_CORE:hcl-dx-core")
+listOfImages+=("DX_DOCKER_IMAGE_WEBENGINE:hcl-dx-webengine")
 listOfImages+=("DX_DOCKER_IMAGE_HAPROXY:hcl-dx-haproxy-image")
 listOfImages+=("DX_DOCKER_IMAGE_OPENSEARCH:hcl-dx-opensearch-image")
 listOfImages+=("DX_DOCKER_IMAGE_FILE_PROCESSOR:hcl-dx-file-processor-image")

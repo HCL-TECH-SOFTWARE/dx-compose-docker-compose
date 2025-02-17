@@ -1,6 +1,6 @@
 @echo off
 
-:: Copyright 2024 HCL Technologies
+:: Copyright 2025 HCL Technologies
 ::
 :: Licensed under the Apache License, Version 2.0 (the "License");
 :: you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
 :: limitations under the License.
 
 
-:: This script will load all DX docker images that are accessible 
+:: This script will load all DX Compose docker images that are accessible 
 :: through docker-compose into the local docker registry.
 :: In addition to that, the dx.properties file will be updated
 :: with the tags of the docker images that were loaded by the script.
@@ -33,7 +33,7 @@ set listOfImages[2]=DX_DOCKER_IMAGE_DATABASE_NODE_DIGITAL_ASSET_MANAGER:hcl-dx-p
 set listOfImages[3]=DX_DOCKER_IMAGE_DATABASE_CONNECTION_POOL_DIGITAL_ASSET_MANAGER:hcl-dx-persistence-connection-pool
 set listOfImages[4]=DX_DOCKER_IMAGE_DIGITAL_ASSET_MANAGER:hcl-dx-digital-asset-manager
 set listOfImages[5]=DX_DOCKER_IMAGE_RING_API:hcl-dx-ringapi
-set listOfImages[6]=DX_DOCKER_IMAGE_CORE:hcl-dx-core
+set listOfImages[6]=DX_DOCKER_IMAGE_WEBENGINE:hcl-dx-webengine
 set listOfImages[7]=DX_DOCKER_IMAGE_HAPROXY:hcl-dx-haproxy-image
 set listOfImages[10]=DX_DOCKER_IMAGE_OPENSEARCH:hcl-dx-opensearch-image
 set listOfImages[11]=DX_DOCKER_IMAGE_FILE_PROCESSOR:hcl-dx-file-processor-image
@@ -49,7 +49,7 @@ SET DX_DOCKER_IMAGE_DATABASE_NODE_DIGITAL_ASSET_MANAGER=""
 SET DX_DOCKER_IMAGE_DATABASE_CONNECTION_POOL_DIGITAL_ASSET_MANAGER=""
 SET DX_DOCKER_IMAGE_DIGITAL_ASSET_MANAGER=""
 SET DX_DOCKER_IMAGE_RING_API=""
-SET DX_DOCKER_IMAGE_CORE=""
+SET DX_DOCKER_IMAGE_WEBENGINE=""
 SET DX_DOCKER_IMAGE_HAPROXY=""
 SET DX_DOCKER_IMAGE_OPENSEARCH=""
 SET DX_DOCKER_IMAGE_FILE_PROCESSOR=""
@@ -72,7 +72,7 @@ SET DX_DOCKER_IMAGE_PEOPLE_SERVICE=""
                             IF %%a==DX_DOCKER_IMAGE_DATABASE_CONNECTION_POOL_DIGITAL_ASSET_MANAGER SET DX_DOCKER_IMAGE_DATABASE_CONNECTION_POOL_DIGITAL_ASSET_MANAGER=!imageNameTag:~14!
                             IF %%a==DX_DOCKER_IMAGE_DIGITAL_ASSET_MANAGER SET DX_DOCKER_IMAGE_DIGITAL_ASSET_MANAGER=!imageNameTag:~14!
                             IF %%a==DX_DOCKER_IMAGE_RING_API SET DX_DOCKER_IMAGE_RING_API=!imageNameTag:~14!
-                            IF %%a==DX_DOCKER_IMAGE_CORE SET DX_DOCKER_IMAGE_CORE=!imageNameTag:~14!
+                            IF %%a==DX_DOCKER_IMAGE_WEBENGINE SET DX_DOCKER_IMAGE_WEBENGINE=!imageNameTag:~14!
                             IF %%a==DX_DOCKER_IMAGE_HAPROXY SET DX_DOCKER_IMAGE_HAPROXY=!imageNameTag:~14!
                             IF %%a==DX_DOCKER_IMAGE_OPENSEARCH SET DX_DOCKER_IMAGE_OPENSEARCH=!imageNameTag:~14!
                             IF %%a==DX_DOCKER_IMAGE_FILE_PROCESSOR SET DX_DOCKER_IMAGE_FILE_PROCESSOR=!imageNameTag:~14!
@@ -110,8 +110,8 @@ IF %%m==DX_DOCKER_IMAGE_CONTENT_COMPOSER  (
     IF %DX_DOCKER_IMAGE_DIGITAL_ASSET_MANAGER%=="" ( echo %%m=%%n) ELSE ( echo %%m=%DX_DOCKER_IMAGE_DIGITAL_ASSET_MANAGER%)
 ) ELSE IF %%m==DX_DOCKER_IMAGE_RING_API (
     IF %DX_DOCKER_IMAGE_RING_API%=="" ( echo %%m=%%n) ELSE ( echo %%m=%DX_DOCKER_IMAGE_RING_API%)
-) ELSE IF %%m==DX_DOCKER_IMAGE_CORE (
-    IF %DX_DOCKER_IMAGE_CORE%=="" ( echo %%m=%%n) ELSE ( echo %%m=%DX_DOCKER_IMAGE_CORE%)
+) ELSE IF %%m==DX_DOCKER_IMAGE_WEBENGINE (
+    IF %DX_DOCKER_IMAGE_WEBENGINE%=="" ( echo %%m=%%n) ELSE ( echo %%m=%DX_DOCKER_IMAGE_WEBENGINE%)
 ) ELSE IF %%m==DX_DOCKER_IMAGE_HAPROXY (
     IF %DX_DOCKER_IMAGE_HAPROXY%=="" ( echo %%m=%%n) ELSE ( echo %%m=%DX_DOCKER_IMAGE_HAPROXY%)
 ) ELSE IF %%m==DX_DOCKER_IMAGE_OPENSEARCH (

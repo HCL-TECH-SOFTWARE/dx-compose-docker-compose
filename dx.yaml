@@ -1,4 +1,4 @@
-# Copyright 2024 HCL Technologies
+# Copyright 2025 HCL Technologies
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,10 +15,10 @@
 version: "3.8"
 
 services:
-  core:
+  webengine:
     platform: linux/amd64
-    container_name: dx-core
-    image: ${DX_DOCKER_IMAGE_CORE:?'Missing docker image environment parameter'}
+    container_name: dx-webengine
+    image: ${DX_DOCKER_IMAGE_WEBENGINE:?'Missing docker image environment parameter'}
     user: "1000:1001"
     restart: unless-stopped
     ports:
@@ -30,12 +30,12 @@ services:
     platform: linux/amd64
     container_name: dx-ringapi
     depends_on:
-      - core
+      - webengine
     image: ${DX_DOCKER_IMAGE_RINGAPI:?'Missing docker image environment parameter'}
     environment:
       - DEBUG=ringapi-server:*
       - PORTAL_PORT=9080
-      - PORTAL_HOST=dx-core
+      - PORTAL_HOST=dx-webengine
     ports:
       - "4000:3000"
     networks:
