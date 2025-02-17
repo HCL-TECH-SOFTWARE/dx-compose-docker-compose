@@ -143,7 +143,7 @@ dx-dam                  0.27%     493.4MiB / 31.21GiB   1.54%     263MB / 381MB 
 dx-dam-db-pool          0.05%     116.8MiB / 31.21GiB   0.37%     586MB / 659MB     0B / 1.44MB       36
 dx-ringapi              0.17%     104.2MiB / 31.21GiB   0.33%     1.45MB / 1.2MB    0B / 24.1kB       23
 dx-dam-db-node-0        0.07%     63.26MiB / 31.21GiB   0.20%     414MB / 233MB     0B / 15.6MB       14
-dx-core                 0.80%     2.137GiB / 31.21GiB   6.85%     1.62MB / 6.71MB   436MB / 563MB     375
+dx-webengine                 0.80%     2.137GiB / 31.21GiB   6.85%     1.62MB / 6.71MB   436MB / 563MB     375
 dx-cc                   0.19%     71.73MiB / 31.21GiB   0.22%     7.7kB / 0B        0B / 11.3kB       58
 dx-image-processor      0.17%     426.3MiB / 31.21GiB   1.33%     17.5MB / 4.27MB   0B / 23kB         23
 dx-peopleservice        0.00%     139.8MiB / 11.67GiB   1.17%     416kB / 86.2kB    70.9MB / 12.1MB   24
@@ -162,29 +162,27 @@ docker-compose ps
 Example output:
 
 ```bash
-  
-IMAGE                                                      COMMAND                  CREATED      STATUS                PORTS                                                                                                                                                                                                                                                                                                                                                                                                                      NAMES
-hcl/dx/haproxy:v1.0.0_20220713-0158                        "/bin/bash entrypoin…"   3 days ago   Up 3 days             0.0.0.0:80->80/tcp, :::80->80/tcp, 0.0.0.0:443->443/tcp, :::443->443/tcp                                                                                                                                                                                                                                                                                                                                                   dx-haproxy
-hcl/dx/digital-asset-manager:v1.12.0_20211213-1448         "/bin/bash entrypoin…"   3 days ago   Up 3 days             0.0.0.0:80->8081/tcp, :::80->8081/tcp                                                                                                                                                                                                                                                                                                                                                                                      dx-dam
-hcl/dx/persistence-connection-pool:v1.13.0_20211213-1457   "/scripts/entrypoint…"   3 days ago   Up 3 days (healthy)   0.0.0.0:5432->5432/tcp, :::5432->5432/tcp                                                                                                                                                                                                                                                                                                                                                                                  dx-dam-db-pool
-hcl/dx/ringapi:v1.13.0_20211213-1457                       "/opt/app/start_all_…"   3 days ago   Up 3 days             0.0.0.0:4000->3000/tcp, :::4000->3000/tcp                                                                                                                                                                                                                                                                                                                                                                                  dx-ringapi
-hcl/dx/persistence-node:v1.3_20211213-1454                 "/start_postgres.sh"     3 days ago   Up 3 days (healthy)   0.0.0.0:5433->5432/tcp, :::5433->5432/tcp                                                                                                                                                                                                                                                                                                                                                                                  dx-dam-db-node-0
-hcl/dx/core:v95_CF200_20211213-1442                        "sh -c /opt/app/entr…"   3 days ago   Up 3 days             0.0.0.0:7777->7777/tcp, :::7777->7777/tcp, 0.0.0.0:10020->10020/tcp, :::10020->10020/tcp, 10032/tcp, 0.0.0.0:10033->10033/tcp, :::10033->10033/tcp, 10034-10038/tcp, 0.0.0.0:10039->10039/tcp, :::10039->10039/tcp, 10040/tcp, 0.0.0.0:10041->10041/tcp, :::10041->10041/tcp, 10042/tcp, 0.0.0.0:10200->10200/tcp, :::10200->10200/tcp, 0.0.0.0:10202-10203->10202-10203/tcp, :::10202-10203->10202-10203/tcp, 10201/tcp   dx-core
-hcl/dx/content-composer:v1.13.0_20211213-1443              "/opt/app/start_all_…"   3 days ago   Up 3 days             0.0.0.0:5000->3000/tcp, :::5000->3000/tcp                                                                                                                                                                                                                                                                                                                                                                                  dx-cc
-hcl/dx/image-processor:v1.13.0_20211213-1446               "/home/dx_user/start…"   3 days ago   Up 3 days             0.0.0.0:3500->8080/tcp, :::3500->8080/tcp                                                                                                                                                                                                                                                                                                                                                                                  dx-image-processor
-hcl/dx/people-service:v1.0.0_20241210-2231                 "/home/dx_user/entry…"   3 days ago   Up 3 days             0.0.0.0:7001->3000/tcp                                                                                                                                                                                           dx-peopleservice
-hcl/dx/file-processor:v95_CF224_20241106-0729              "/bin/bash entrypoin…"   3 days ago   Up 3 days            0.0.0.0:9998->9998/tcp                                                                                                                                                                                           dx-fileprocessor
-hcl/dx/search-middleware:v2.0.0_20250102-1045              "/bin/bash entrypoin…"   3 days ago   Up 3 days            0.0.0.0:3000->3000/tcp                                                                                                                                                                                           dx-search-middleware
-hcl/dx/opensearch:v2.0.0_20250104-1911                     "/bin/bash entrypoin…"   3 days ago   Up 3 days             9300/tcp, 9600/tcp, 0.0.0.0:9200->9200/tcp, 9650/tcp   
-
- ```
+IMAGE                                                             COMMAND                     CREATED     STATUS               PORTS                                                                                              NAMES
+hcl/dx-compose/haproxy:v1.21.0_20250203-2240                      "/bin/bash entrypoin…"      3 days ago  Up 3 days            0.0.0.0:80->8081/tcp                                          dx-haproxy
+hcl/dx-compose/digital-asset-manager:v1.37.0_20250203-2300        "/opt/app/start_all_…"      3 days ago  Up 3 days            0.0.0.0:4001->3001/tcp                                       dx-dam
+hcl/dx-compose/persistence-connection-pool:v1.35.0_20250203-2301  "/scripts/entrypoint…"      3 days ago  Up 3 days (healthy)  0.0.0.0:5432->5432/tcp                                       dx-dam-db-pool
+hcl/dx-compose/ringapi:v1.38.0_20250203-2244                      "/opt/app/start_all_…"      3 days ago  Up 3 days            0.0.0.0:4000->3000/tcp                                       dx-ringapi
+hcl/dx-compose/persistence-node:v1.25_20250203-2242               "/start_postgres.sh"        3 days ago  Up 3 days (healthy)  0.0.0.0:5433->5432/tcp                                       dx-dam-db-node-0
+hcl/dx-compose/webengine:CF225_20250204-1935                      "sh -c /opt/app/entr…"      3 days ago  Up 3 days            7777/tcp, 0.0.0.0:9080->9080/tcp, 9091/tcp, 10033/tcp, 0.0.0.0:9443->9443/tcp  dx-webengine
+hcl/dx-compose/content-composer:v1.38.0_20250203-2223             "/opt/app/start_all_…"      3 days ago  Up 3 days            0.0.0.0:5001->3000/tcp                                       dx-cc
+hcl/dx-compose/image-processor:v1.38.0_20250203-2244              "/home/dx_user/start…"      3 days ago  Up 3 days            0.0.0.0:3500->8080/tcp                                       dx-image-processor
+hcl/dx-compose/people-service:v1.0.0_20250203-2223                "/home/dx_user/entry…"      3 days ago  Up 3 days            0.0.0.0:7001->3000/tcp                                       dx-peopleservice
+hcl/dx-compose/dx-file-processor:v2.0.0_20250203-2240             "/bin/sh -c 'exec ja…"      3 days ago  Up 3 days            0.0.0.0:9998->9998/tcp                                       dx-fileprocessor
+hcl/dx-compose/dx-search-middleware:v2.0.0_20250207-1433          "/home/dx_user/start…"      3 days ago  Up 3 days            0.0.0.0:3000->3000/tcp                                       dx-search-middleware
+hcl/dx-compose/dx-opensearch:v2.0.0_20250207-1432                 "./opensearch-docker…"      3 days ago  Up 3 days            9300/tcp, 9600/tcp, 0.0.0.0:9200->9200/tcp, 9650/tcp         dx-opensearch-manager
+```
 
 ## Tips and tricks
 
 ### Docker-compose services and load balancing
 
 The core of a docker-compose environment are its services.
-In the case of DX Compose, each of the different DX Compose components (Core, CC, DAM, ...) is a individual docker-compose service.
+In the case of DX Compose, each of the different DX Compose components (WebEngine, CC, DAM, ...) is a individual docker-compose service.
 The services are all described and configured in `dx.yaml`.
 Amongst other configurations, each service has a external port defined.
 
@@ -225,7 +223,7 @@ Update the Ring API service configuration as described:
 ```yaml
 ringapi:
   # depends_on:
-  #   - core
+  #   - webengine
 ```
 
 2. Update the `PORTAL_HOST` parameter values.
@@ -240,7 +238,7 @@ The result of the changes to the `ringapi` service should look similar to the sn
 ```yaml
 ringapi:
   # depends_on:
-  #   - dx-core
+  #   - dx-webengine
   image: ${DX_DOCKER_IMAGE_RINGAPI:?'Missing docker image environment parameter'}
   environment:
     - DEBUG=ringapi-server:*
@@ -322,11 +320,11 @@ cd ./dx-compose-docker-compose
 installApps.bat -enableDAM true -enableCC false -enableSearchV2 true -enablePeopleService true
 ```
 
-> **_NOTE:_** For any change in Search, you need to restart the core to ensure Search page, theme, and portlet have no caching issues.
+> **_NOTE:_** For any change in Search, you need to restart the webengine to ensure Search page, theme, and portlet have no caching issues.
 
-> **_NOTE:_** For any change in DAM, you need to restart the core, otherwise DAM Picker will not work as expected
+> **_NOTE:_** For any change in DAM, you need to restart the webengine, otherwise DAM Picker will not work as expected
 
-> **_NOTE:_** For any change in DX_HOSTNAME it's a must to restart dx-core and re-execute installApps.sh / installApps.bat
+> **_NOTE:_** For any change in DX_HOSTNAME it's a must to restart dx-webengine and re-execute installApps.sh / installApps.bat
 
 ### Integrating Search API and UI in DX WebEngine
 
@@ -344,7 +342,7 @@ cd ./dx-compose-docker-compose
 source /opt/openliberty/wlp/usr/svrcfg/bin/manageSearchV2.sh -DENABLE=true -Dsearch.middleware.ui.uri=http://dx-search-middleware:3000/dx/ui/search -Dsearch.input.redirect.version=2 -Dsearch.wcm.version=2
 ```
 
-NOTE: For any change in Search need to restart the core container
+NOTE: For any change in Search need to restart the webengine container
 
 Check that the search-middleware API is up and running
 ```bash
@@ -367,14 +365,14 @@ To create a `WCM` content source, use the POST `contentsources` endpoint with th
 {
   "name": "MyWCM",
   "type": "wcm",
-  "aclLookupHost": "http://dx-core:9080",
+  "aclLookupHost": "http://dx-webengine:9080",
   "aclLookupPath": "/wps/mycontenthandler"
 }
 ```
 
 The `aclLookupPath` is using this pattern - `<CONTEXT-ROOT>/mycontenthandler/<VP-CONTEXT>`.
 
-The response `id` would then be needed to create its specific WCM crawler. The `dx-core` container will be used as WCM data source.
+The response `id` would then be needed to create its specific WCM crawler. The `dx-webengine` container will be used as WCM data source.
 
 
 #### Create a crawler
@@ -385,7 +383,7 @@ To create a crawler for the `WCM` content source, use the POST `crawlers` endpoi
   "contentSource": "<CONTENT-SOURCE-ID>",
   "type": "wcm",
   "configuration": {
-    "targetDataSource": "http://dx-core:9080/wps/seedlist/server?SeedlistId=&Source=com.ibm.workplace.wcm.plugins.seedlist.retriever.WCMRetrieverFactory&Action=GetDocuments",
+    "targetDataSource": "http://dx-webengine:9080/wps/seedlist/server?SeedlistId=&Source=com.ibm.workplace.wcm.plugins.seedlist.retriever.WCMRetrieverFactory&Action=GetDocuments",
     "schedule": "*/5 * * * *",
     "security": {
       "type": "basic",
@@ -397,7 +395,7 @@ To create a crawler for the `WCM` content source, use the POST `crawlers` endpoi
   }
 }
 ```
-http://dx-core/wps/seedlist/server?SeedlistId=&Source=com.ibm.workplace.wcm.plugins.seedlist.retriever.WCMRetrieverFactory&Action=GetDocuments
+http://dx-webengine/wps/seedlist/server?SeedlistId=&Source=com.ibm.workplace.wcm.plugins.seedlist.retriever.WCMRetrieverFactory&Action=GetDocuments
 
 The crawler needs a bit of time to collect all the WCM data. It also depends on the `schedule` parameter (for example, in the sample payload above, schedule is every 5 minutes). Check the middleware logs to get info if the crawler is done. You can also use the GET `crawlers` endpoint to check on the crawler status.
 
@@ -478,9 +476,9 @@ frontend dx-https
   use_backend content if { path_beg /dx/ui/content/ }
   use_backend image-processor if { path_beg /dx/api/image-processor/ }
   use_backend ring-api if { path_beg /dx/api/core/ }
-  default_backend core-dx-home-ssl
-backend core-dx-home-ssl
-  server core-ssl dx-core:9443 check resolvers nameserver init-addr none
+  default_backend webengine-dx-home-ssl
+backend webengine-dx-home-ssl
+  server webengine-ssl dx-webengine:9443 check resolvers nameserver init-addr none
 ```
 
 Finally, restart the HAProxy Docker container to apply the new configuration:
