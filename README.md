@@ -304,20 +304,21 @@ To install CC and DAM and SearchV2 and PeopleService applications in DX Compose 
 - -enableCC: if set true/false need to enable/disable CC in the DX Compose WebEngine respectively.
 - -enableSearchV2: if set true/false need to enable/disable SearchV2 in the DX Compose WebEngine respectively.
 - -enablePeopleService: if set true/false need to enable/disable PeopleService in the DX Compose WebEngine respectively.
+- -middlewareServiceUri: if set based on your custom search middleware setup, this will override the current default `http://dx-search-middleware:3000/dx/ui/search`
 
 
 Linux/MAC:
 
 ```bash
 cd ./dx-compose-docker-compose
-source ./installApps.sh -enableDAM true -enableCC false -enableSearchV2 true -enablePeopleService true
+source ./installApps.sh -enableDAM true -enableCC true -enableSearchV2 true -enablePeopleService true
 ```
 
 Windows:
 
 ```bash
 cd ./dx-compose-docker-compose
-installApps.bat -enableDAM true -enableCC false -enableSearchV2 true -enablePeopleService true
+installApps.bat -enableDAM true -enableCC true -enableSearchV2 true -enablePeopleService true
 ```
 
 > **_NOTE:_** For any change in Search, you need to restart the webengine to ensure Search page, theme, and portlet have no caching issues.

@@ -21,6 +21,7 @@ ENABLE_DAM=false
 ENABLE_CC=false
 ENABLE_SEARCHV2=false
 ENABLE_PEOPLE_SERVICE=false
+MIDDLEWARE_SERVICE_URI="http://dx-search-middleware:3000/dx/ui/search"
 
 # Helper function to validate boolean values
 validate_boolean() {
@@ -50,6 +51,11 @@ while [[ $# -gt 0 ]]; do
     -enableSearchV2)
       ENABLE_SEARCHV2="$2"
       validate_boolean "$ENABLE_SEARCHV2" "enableSearchV2"
+      shift # past argument
+      shift # past value
+      ;;
+    -middlewareServiceUri)
+      MIDDLEWARE_SERVICE_URI="$2"
       shift # past argument
       shift # past value
       ;;
@@ -85,7 +91,7 @@ echo ""
 docker exec dx-webengine sh -c "/opt/openliberty/wlp/usr/svrcfg/bin/manageDAM.sh -Dstatic.ui.url=http://$DX_HOSTNAME/dx/ui/dam/static -DENABLE=$ENABLE_DAM"
 echo "############################################################################"
 echo ""
-docker exec dx-webengine sh -c "/opt/openliberty/wlp/usr/svrcfg/bin/manageSearchV2.sh -Dsearch.input.redirect.version=2 -Dsearch.wcm.version=2 -Dsearch.middleware.ui.uri=http://dx-search-middleware:3000/dx/ui/search -DENABLE=$ENABLE_SEARCHV2"
+docker exec dx-webengine sh -c "/opt/openliberty/wlp/usr/svrcfg/bin/manageSearchV2.sh -Dsearch.input.redirect.version=2 -Dsearch.wcm.version=2 -Dsearch.middleware.ui.uri=$MIDDLEWARE_SERVICE_URI -DENABLE=$ENABLE_SEARCHV2"
 echo "############################################################################"
 echo ""
 docker exec dx-webengine sh -c "/opt/openliberty/wlp/usr/svrcfg/bin/managePeopleService.sh -DPEOPLESERVICE_ENABLED=$ENABLE_PEOPLE_SERVICE -DPEOPLESERVICE_WEBRESOURCES_URI=$PEOPLE_SERVICE_WEBRESOURCES_URI -DPEOPLESERVICE_UI_CONTEXT=$PEOPLE_SERVICE_CONTEXT_ROOT_UI -DPEOPLESERVICE_API_CONTEXT=$PEOPLE_SERVICE_CONTEXT_ROOT_API -DPEOPLESERVICE_PORTLET_CONTEXT=$PEOPLE_SERVICE_CONTEXT_ROOT_PORTLET"
