@@ -208,55 +208,6 @@ In addition to the above, if `db-node-0` or `db-pool` or `dam` is down, verify a
 2. Once the `db-node-0` is up, start `db-pool` using `docker-compose start db-pool`. Verify the logs and ensure `db-pool` is able to connect to the `db-node-0`.
 3. Start `dam` if the `db-pool` is up using `docker-compose start dam`. Verify the logs to see if DAM is running.
 
-
-### Running DX Compose docker-compose in a hybrid setup
-
-In the case that you already have a fully configured DX Compose WebEngine (e.g. an on premise installation) up and running, you can choose to configure docker-compose to connect to the on premise environment.
-The below mentioned changes in `dx.yaml` need to be applied to make this work.
-
-> **_NOTE:_** You will also have to configure your DX Compose WebEngine environment to connect to the services running docker-compose (e.g. configuration of DAM and Content Composer portlets). Please have a look in the official HCL DX Compose Help Center to understand which changes need to be done, if necessary.
-
-Update the Ring API service configuration as described:
-
-1. Disable the `depends_on` parameter.
-
-```yaml
-ringapi:
-  # depends_on:
-  #   - webengine
-```
-
-2. Update the `PORTAL_HOST` parameter values.
-
-```yaml
-environment:
-  - PORTAL_HOST=example.com
-```
-
-The result of the changes to the `ringapi` service should look similar to the snippet below:
-
-```yaml
-ringapi:
-  # depends_on:
-  #   - dx-webengine
-  image: ${DX_DOCKER_IMAGE_RINGAPI:?'Missing docker image environment parameter'}
-  environment:
-    - DEBUG=ringapi-server:*
-    - PORTAL_PORT=10039
-    - PORTAL_HOST=example.com
-  ports:
-    - "4000:3000"
-  networks:
-    - default
-```
-
-Update the Content Composer service configuration as described:
-
-```yaml
-environment:
-  - PORTAL_HOST=example.com
-```
-
 ### Starting and stopping individual services
 
 #### Docker-compose up
