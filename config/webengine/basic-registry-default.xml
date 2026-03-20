@@ -1,0 +1,8 @@
+<server description="DX Web Engine server">
+  <basicRegistry id="basic" realm="defaultWIMFileBasedRealm">
+    <user name="${DX_ADMIN}" password="${DX_PASSWORD}"/>
+    <group name="${DX_ADMIN_GROUP}">
+      <member name="${DX_ADMIN}"/>
+    </group>
+  </basicRegistry>
+</server>

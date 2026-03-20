@@ -90,6 +90,21 @@ You can stop docker-compose in this situation by pressing `CTRL+C`.
 
 If your user does not have permission to write to the persistent volumes location (folder `dx-compose-docker-compose/volumes`) specified in the docker-compose file dx.yaml, you will see errors and the system will not start properly. If necessary, change the permissions of this folder so that the user running the docker process can read from and write to it.
 
+### CF234 WebEngine basic registry requirement
+
+Starting with CF234, the WebEngine image no longer contains a built-in basic registry entry in `server.xml`.
+For docker-compose/image-based deployments (without Helm), the basic registry must be provided through a Liberty override file.
+
+This repository already provides the required override file:
+
+- `config/webengine/basic-registry-default.xml`
+
+And mounts it in `dx.yaml` for the `webengine` service:
+
+- `./config/webengine/basic-registry-default.xml:/opt/openliberty/wlp/usr/servers/defaultServer/configDropins/overrides/basic-registry-default.xml:ro`
+
+If you see UserRegistry startup errors, verify the override mount and these variables first.
+
 Here are some useful command line arguments to run `docker-compose up`:
 
 - `-d, --detach`: detached mode
