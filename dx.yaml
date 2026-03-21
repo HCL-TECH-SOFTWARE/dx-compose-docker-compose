@@ -26,6 +26,8 @@ services:
       - "9443:9443"
     networks:
       - default
+    volumes:
+      - ./config/webengine/basic-registry-default.xml:/opt/openliberty/wlp/usr/servers/defaultServer/configDropins/overrides/basic-registry-default.xml:ro
   ringapi:
     platform: linux/amd64
     container_name: dx-ringapi
