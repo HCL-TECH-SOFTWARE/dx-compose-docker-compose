@@ -449,7 +449,7 @@ Finally, restart the HAProxy Docker container to apply the new configuration:
 docker restart dx-haproxy
 ```
 
-## Instructions to load HCL DX Container images from HCL Harbor
+## Instructions to load HCL DX-Compose Container images from HCL Harbor
 
 It is possible to load **the latest** HCL DX-Compose container images from [HCL Harbor](https://hclcr.io/account/sign-in) using the **loadFromHarbor.bat** (for Microsoft Windows) or **loadFromHarbor.sh** script when running on Apple Macintosh or any Unix/Linux environment.  
 
