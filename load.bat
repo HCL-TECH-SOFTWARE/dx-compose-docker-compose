@@ -35,10 +35,10 @@ set listOfImages[4]=DX_DOCKER_IMAGE_DIGITAL_ASSET_MANAGER:hcl-dx-digital-asset-m
 set listOfImages[5]=DX_DOCKER_IMAGE_RING_API:hcl-dx-ringapi
 set listOfImages[6]=DX_DOCKER_IMAGE_WEBENGINE:hcl-dx-webengine
 set listOfImages[7]=DX_DOCKER_IMAGE_HAPROXY:hcl-dx-haproxy-image
-set listOfImages[10]=DX_DOCKER_IMAGE_OPENSEARCH:hcl-dx-opensearch-image
-set listOfImages[11]=DX_DOCKER_IMAGE_FILE_PROCESSOR:hcl-dx-file-processor-image
-set listOfImages[12]=DX_DOCKER_IMAGE_SEARCH_MIDDLEWARE:hcl-dx-search-middleware-image
-set listOfImages[13]=DX_DOCKER_IMAGE_PEOPLE_SERVICE:hcl-dx-people-service-image
+set listOfImages[8]=DX_DOCKER_IMAGE_OPENSEARCH:hcl-dx-opensearch-image
+set listOfImages[9]=DX_DOCKER_IMAGE_FILE_PROCESSOR:hcl-dx-file-processor-image
+set listOfImages[10]=DX_DOCKER_IMAGE_SEARCH_MIDDLEWARE:hcl-dx-search-middleware-image
+set listOfImages[11]=DX_DOCKER_IMAGE_PEOPLE_SERVICE:hcl-dx-people-service-image
 
 
 
