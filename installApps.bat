@@ -93,7 +93,7 @@ echo "##########################################################################
 echo "Installing CC and DAM and SearchV2 and PeopleService portlets using DX_HOSTNAME=%DX_HOSTNAME%"
 echo "#############################################################################"
 echo ""
-docker exec dx-webengine sh -c "/opt/openliberty/wlp/usr/svrcfg/bin/manageCC.sh  -Dstatic.ui.url=http://%DX_HOSTNAME%/dx/ui/content/static -DENABLE=%ENABLE_CC%"
+docker exec dx-webengine sh -c "/opt/openliberty/wlp/usr/svrcfg/bin/product-features/manageCC.sh  -Dstatic.ui.url=http://%DX_HOSTNAME%/dx/ui/content/static -DENABLE=%ENABLE_CC%"
 echo "#############################################################################"
 echo ""
 docker exec dx-webengine sh -c "/opt/openliberty/wlp/usr/svrcfg/bin/product-features/manageDAM.sh -Dstatic.ui.url=http://%DX_HOSTNAME%/dx/ui/dam/static -DENABLE=%ENABLE_DAM%"
