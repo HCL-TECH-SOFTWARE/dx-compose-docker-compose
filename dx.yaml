@@ -12,8 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-version: "3.8"
-
 services:
   webengine:
     platform: linux/amd64
@@ -27,6 +25,7 @@ services:
     networks:
       - default
     volumes:
+      - ./volumes/logs:/opt/openliberty/wlp/usr/servers/defaultServer/logs
       - ./config/webengine/basic-registry-default.xml:/opt/openliberty/wlp/usr/servers/defaultServer/configDropins/overrides/basic-registry-default.xml:ro
   ringapi:
     platform: linux/amd64
@@ -120,7 +119,7 @@ services:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 30s
       timeout: 30s
-      retries: 3
+      retries: 10
     ports:
       - "5433:5432"
     volumes:
@@ -146,6 +145,7 @@ services:
       - PGPOOL_ENABLE_LOAD_BALANCING=yes
       - PGPOOL_POSTGRES_CUSTOM_USERS=damuser
       - PGPOOL_POSTGRES_CUSTOM_PASSWORDS=1234
+      - NEW_DB_MANAGEMENT=false
     networks:
       - default
     depends_on:
@@ -154,8 +154,8 @@ services:
     healthcheck:
       test: ["CMD-SHELL", "sh scripts/healthcheck.sh"]
       interval: 30s
-      timeout: 15s
-      retries: 5
+      timeout: 30s
+      retries: 10
   haproxy:
     platform: linux/amd64
     image: ${DX_DOCKER_IMAGE_HAPROXY:?'Missing docker image environment parameter'}
@@ -171,6 +171,7 @@ services:
     container_name: dx-opensearch-manager
     hostname: dx-opensearch-manager
     environment:
+#     - DISABLE_SECURITY_PLUGIN=true
       - HOSTNAME=dx-opensearch-manager
       - discovery.type=single-node
     volumes:
@@ -192,6 +193,7 @@ services:
     image: ${DX_DOCKER_IMAGE_SEARCH_MIDDLEWARE:?'Missing docker image environment parameter'}
     container_name: dx-search-middleware
     hostname: dx-search-middleware
+#    user: root
     environment:
       - OPENSEARCH_HOST=dx-opensearch-manager
       - OPENSEARCH_PORT=9200
