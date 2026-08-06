@@ -15,7 +15,7 @@ All you need to do is to load the HCL DX Compose docker images into your local d
 
 ### Loading DX Compose docker images
 
-The load.sh script expects a path to a directory containing the docker image archives as a command line argument <docker-image-archives-directory>.
+The load.sh script expects a path to a directory containing the docker image archives as a command line argument `<docker-image-archives-directory>`.
 
 > **_NOTE:_** If you already loaded the DX Compose docker images into a docker repository of your choice, you may skip executing `load.sh` or `load.bat`.
 Please make sure to update the image names in the `dx.properties` file appropriately.
@@ -73,7 +73,8 @@ unset.bat
 > **_NOTE:_** By applying the above change, any change you apply in DX Compose WebEngine will not be persisted. All your changes will be lost as soon as the container is stopped.
 
 ## Create the correct certificates
-```
+
+```bash
 source ./createCerts.sh
 ```
 
@@ -205,16 +206,19 @@ Inside a docker-compose environment all containers of a particular service are r
 If you connect into a docker container running in docker-compose, you'll be able to resolve the service name via dns. You could do so by just pinging the image processor (service name "image-processor") from any other container.
 See below on how to bash into a docker-compose container.
 
-###  Databases and DAM startup issue
+### Databases and DAM startup issue
 
 In few machines, permissions for volumes on database seems to be causing issues with the startup. Couple of workarounds for this issue is:
 
 1. Provide appropriate permissions `chmod 750 -R volumes`.
+
 2. If permissions do not help, then remove the (volumes) following lines for `db-node-0` service in `dx.yaml`
+
 ```yaml
       volumes:
         - ./volumes/dam/db:/var/lib/pgsql/11/data
 ```
+
 Execute `docker-compose down` and `docker-compose up -d` again. If all the instances are not up, then execute `docker-compose watch` to restart the failed containers and verification.
 
 In addition to the above, if `db-node-0` or `db-pool` or `dam` is down, verify and start the services in the sequence.
@@ -258,20 +262,23 @@ docker-compose logs dam
 For more information see <https://docs.docker.com/compose/reference/logs/>
 
 ### Installing Applications CC and DAM and SearchV2 and PeopleService in DX Compose WebEngine
+
 #### Prerequisites
+
 ```bash
 sudo mkdir /var/log/liberty
 sudo chown -R  $USER:$USER  /var/log/liberty
 ```
 
-To install CC and DAM and SearchV2 and PeopleService applications in DX Compose WebEngine and to enable , 
+To install CC and DAM and SearchV2 and PeopleService applications in DX Compose WebEngine and to enable ,  
+
 ##### Arguments
+
 - -enableDAM: if set true/false need to enable/disable DAM in the DX Compose WebEngine respectively.
 - -enableCC: if set true/false need to enable/disable CC in the DX Compose WebEngine respectively.
 - -enableSearchV2: if set true/false need to enable/disable SearchV2 in the DX Compose WebEngine respectively.
 - -enablePeopleService: if set true/false need to enable/disable PeopleService in the DX Compose WebEngine respectively.
 - -middlewareServiceUri: if set based on your custom search middleware setup, this will override the current default `http://dx-search-middleware:3000/dx/ui/search`
-
 
 Linux/MAC:
 
@@ -287,17 +294,15 @@ cd ./dx-compose-docker-compose
 installApps.bat -enableDAM true -enableCC true -enableSearchV2 true -enablePeopleService true
 ```
 
-> **_NOTE:_** For any change in Search, you need to restart the webengine to ensure Search page, theme, and portlet have no caching issues.
-
-> **_NOTE:_** For any change in DAM, you need to restart the webengine, otherwise DAM Picker will not work as expected
-
+> **_NOTE:_** For any change in Search, you need to restart the webengine to ensure Search page, theme, and portlet have no caching issues.  
+> **_NOTE:_** For any change in DAM, you need to restart the webengine, otherwise DAM Picker will not work as expected.  
 > **_NOTE:_** For any change in DX_HOSTNAME it's a must to restart dx-webengine and re-execute installApps.sh / installApps.bat
 
 ### Integrating Search API and UI in DX WebEngine
 
-To install Search applications in DX WebEngine and to enable ,
+To install Search applications in DX WebEngine and to enable,
 
-#### Arguments
+#### Search/UI arguments
 
 - -DENABLE: if set true/false need to enable/disable Search in the DX WebEngine respectively.
 - -Dsearch.middleware.ui.uri: URL of search middleware, for eg: `http://dx-search-middleware:3000/dx/ui/search`
@@ -312,11 +317,13 @@ source /opt/openliberty/wlp/usr/svrcfg/bin/manageSearchV2.sh -DENABLE=true -Dsea
 NOTE: For any change in Search need to restart the webengine container
 
 Check that the search-middleware API is up and running
+
 ```bash
 http://localhost/dx/api/search/v2/explorer
 ```
 
 Check that the searchCenter UI is up and running
+
 ```bash
 http://localhost/wps/portal/Practitioner/SearchCenter
 ```
@@ -324,11 +331,14 @@ http://localhost/wps/portal/Practitioner/SearchCenter
 ### Using Search API and UI in DX WebEngine
 
 #### Create JWT token
-Open the `search-middleware` API explorer (http://localhost/dx/api/search/v2/explorer). Do an authentication via the `/admin/authenticate` endpoint with the `searchadmin` user. The JWT token is now needed for the authorization. Do authorization with `Bearer JWT_TOKEN`.
+
+Open the `search-middleware` API explorer (`http://localhost/dx/api/search/v2/explorer`). Do an authentication via the `/admin/authenticate` endpoint with the `searchadmin` user. The JWT token is now needed for the authorization. Do authorization with `Bearer JWT_TOKEN`.
 
 #### Create a content source
+
 To create a `WCM` content source, use the POST `contentsources` endpoint with the following example payload.
-```
+
+```json
 {
   "name": "MyWCM",
   "type": "wcm",
@@ -341,11 +351,11 @@ The `aclLookupPath` is using this pattern - `<CONTEXT-ROOT>/mycontenthandler/<VP
 
 The response `id` would then be needed to create its specific WCM crawler. The `dx-webengine` container will be used as WCM data source.
 
-
 #### Create a crawler
-To create a crawler for the `WCM` content source, use the POST `crawlers` endpoint. Please replace the `<CONTENT-SOURCE-ID>` with the correct `id`. The following payload can be used to create the `WCM` crawler. 
 
-```
+To create a crawler for the `WCM` content source, use the POST `crawlers` endpoint. Please replace the `<CONTENT-SOURCE-ID>` with the correct `id`. The following payload can be used to create the `WCM` crawler.  
+
+```json
 {
   "contentSource": "<CONTENT-SOURCE-ID>",
   "type": "wcm",
@@ -362,7 +372,10 @@ To create a crawler for the `WCM` content source, use the POST `crawlers` endpoi
   }
 }
 ```
+
+```URL
 http://dx-webengine/wps/seedlist/server?SeedlistId=&Source=com.ibm.workplace.wcm.plugins.seedlist.retriever.WCMRetrieverFactory&Action=GetDocuments
+```
 
 The crawler needs a bit of time to collect all the WCM data. It also depends on the `schedule` parameter (for example, in the sample payload above, schedule is every 5 minutes). Check the middleware logs to get info if the crawler is done. You can also use the GET `crawlers` endpoint to check on the crawler status.
 
@@ -372,16 +385,15 @@ When the crawler status is finished, you can now use the Search UI to query.
 http://localhost/wps/portal/Practitioner/SearchCenter
 ```
 
-
-### Connecting to your DX Compose and applications.
+### Connecting to your DX Compose and applications
 
 To access your DX Compose environment, navigate to _http://<PORTAL_HOST>/wps/portal_
 
-Example: http://example.com/wps/portal
+Example: `http://example.com/wps/portal`
 
 To access DX Compose admin console, navigate to _https://<PORTAL_HOST>:9443/adminCenter/login.jsp
 
-Example: https://example.com:9443/adminCenter/login.jsp
+Example: `https://example.com:9443/adminCenter/login.jsp`
 
 ### Connecting into a docker-compose service via bash
 
@@ -397,7 +409,7 @@ To connect into a specific container of a service (if there is multiple containe
 docker exec -it dx_dam bash
 ```
 
-### Running Prerequisite Checks to your DX Compose and applications.
+### Running Prerequisite Checks to your DX Compose and applications
 
 To perform checks to the mounted volumes, you can directly connect using the dx-prereqs-checker container
 
@@ -410,29 +422,34 @@ To display the logs of the check results, run
 ```bash
 docker-compose logs prereqs-checker
 ```
-    
+
 ### Access DX on Liberty at default HTTPS port 443
 
 Steps for configuring SSL to access Digital Experience (DX) on Liberty at the default HTTPS port 443 through HAProxy.
 
 Begin by generating a self-signed certificate. Use the following command to create the certificate:
-```
+
+```bash
 openssl req -x509 -newkey rsa:2048 -keyout tls.key -out tls.crt -days 365 -nodes
 ```
+
 Next, copy the generated certificate files (tls.key and tls.crt) into the HAProxy container. Use the docker cp command for this task:
-```
+
+```bash
 docker cp <path to file>/tls.key dx-haproxy:/etc/ssl/certs/
 docker cp <path to file>/tls.crt dx-haproxy:/etc/ssl/certs/
 ```
 
 Update the dx.yaml file to include the necessary port mappings for HAProxy. Ensure the following mapping is added:
-```
+
+```yaml
 ports:
   - "443:8083"
 ```
 
 Edit the haproxy.cfg file to add frontend and backend configurations. Include the following configuration:
-```
+
+```json
 frontend dx-https
   bind :8083 ssl crt /etc/ssl/certs/tls
   use_backend dam if { path -m reg ^/dx/(api|ui)/dam/ }
@@ -444,8 +461,9 @@ backend webengine-dx-home-ssl
   server webengine-ssl dx-webengine:9443 check resolvers nameserver init-addr none
 ```
 
-Finally, restart the HAProxy Docker container to apply the new configuration:
-```
+Finally, restart the HAProxy Docker container to apply the new configuration:  
+
+```bash
 docker restart dx-haproxy
 ```
 
@@ -489,4 +507,93 @@ For example:
     ```bash
     docker-compose up -d
     ```
+
+## Updating the HCL DX docker-compose git repository
+
+Whenever a new release of HCL DX Compose is available, we suggest you to update this git-repository. Container images and parameters may change with new Cumulative Fix versions. This git repository may not work correctly anymore, when it still use an older version.  
+
+**Best practice:**  
+
+- Always keep this git-repository up to date, before using it.  
+- Always download the latest container images. You can do that at best with the loadFromHarbor scripts.
+
+### Update procedure
+
+As soon as the git repository is cloned to a local directory, use the following steps to keep it up to date:  
+
+1. If your HCL DX Compose environment is currently running, stop it with the command:  
+
+   ```bash
+   docker-compose down
+   ```  
+
+   **note:**  
+   If local volume mappings are used in the past (for example for DAM etc.), please delete all files in the local volumes folders to ensure that the new startup then create the new file versions.  
+
+2. In a command line window (bash) go into the cloned git directory (for example: \HCL\git_repositories\dx-docker-compose)
+
+3. Run the command:  
+
+   ```bash
+   git fetch origin
+   ```  
   
+   **note:**  
+   This will update the git repository.  
+
+4. Run the loadFromHarbor script. That automatically will download the latest HCL DX container images.
+
+5. Execute the command:  
+
+    **On Linux/Mac:**  
+
+    ```bash  
+    ./set.sh
+    ```  
+
+    **On Windows:**
+
+    ```bash  
+    set.bat
+    ```  
+
+    **note:**  
+    That command automatically change the image-labels to the current versions.  
+
+6. Run the command:  
+
+    ```bash  
+    docker-compose up -d
+    ```  
+
+7. Run the command:  
+
+   **On Windows:**
+
+    ```bash  
+    installApps.bat -enableDAM true -enableCC true -enableSearchV2 true -enablePeopleService true
+    ```  
+
+   **On Linux:**
+
+    ```bash  
+    ./installApps.sh -enableDAM true -enableCC true -enableSearchV2 true -enablePeopleService true
+    ```  
+
+    **note:**  
+    This command is going to install the new add-ons like DAM or Content Composer on your new HCL DX environment.  
+
+8. (Optional) Cleanup the old container images in docker.
+
+    For that use at best the commands:  
+
+    ```bash  
+    docker images
+    ```
+
+    To list all available docker-images.  
+    Old images can be deleted with command:  
+
+    ```bash  
+    docker rmi <container-image-name>:<version>
+    ```  
